@@ -58,14 +58,20 @@ export const createFromEslintResult = (eslintResult) => {
                 result[filePath][message.ruleId] = [];
             }
 
+            const context = (
+                (fileLines[message.line - 1] ?? '')
+                + (fileLines[message.line] ?? '')
+                + (fileLines[message.line + 1] ?? '')
+            );
+
             result[filePath][message.ruleId].push({
                 path: filePath,
-                context: fileLines[message.line],
+                context,
                 ruleId: message.ruleId,
                 hash: objectHash.sha1({
                     filePath,
                     ruleId: message.ruleId,
-                    context: fileLines[message.line],
+                    context,
                 })
             });
         }
@@ -92,10 +98,16 @@ export const getFilteredMessages = (eslintResult, baseline) => {
                 continue;
             }
 
+            const context = (
+                (fileLines[message.line - 1] ?? '')
+                + (fileLines[message.line] ?? '')
+                + (fileLines[message.line + 1] ?? '')
+            );
+
             const hash = objectHash.sha1({
                 filePath,
                 ruleId: message.ruleId,
-                context: fileLines[message.line],
+                context,
             });
 
             if (!baseline[filePath][message.ruleId].some(x => x.hash === hash)) {
