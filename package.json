@@ -1,6 +1,6 @@
 {
   "name": "@chobotx/eslint-baseline",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "create a baseline for eslint pipelines",
   "keywords": [ "eslint", "baseline", "base-line", "ci", "code", "continuous integration", "linter", "quality"],
   "main": "index.js",
